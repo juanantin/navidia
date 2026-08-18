@@ -148,16 +148,23 @@
   .hero{
     position:relative;
     width:100%;
-    aspect-ratio: 1672 / 941;
+    aspect-ratio: 736 / 400;
     display:flex; align-items:center;
     padding: 40px 6vw;
+    overflow:hidden;
+    background: var(--bg);
+  }
+  .hero-video{
+    position:absolute; inset:0; z-index:0;
+    width:100%; height:100%;
+    aspect-ratio: 736 / 400;
+    object-fit:cover;
+  }
+  .hero-overlay{
+    position:absolute; inset:0; z-index:1;
     background-image:
       linear-gradient(180deg, transparent 68%, var(--bg) 100%),
-      linear-gradient(100deg, transparent 38%, rgba(3,7,15,0.4) 70%, rgba(3,7,15,0.6) 100%),
-      url('navidia_web_bg.png');
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-position: center, center, center;
-    background-size: 100% 100%, 100% 100%, cover;
+      linear-gradient(100deg, transparent 38%, rgba(3,7,15,0.4) 70%, rgba(3,7,15,0.6) 100%);
   }
   .hero-inner{
     position:relative; z-index:2;
@@ -331,12 +338,14 @@
     .nav-link span.label{ display:none; }
     .hero{
       aspect-ratio: unset;
-      align-items:flex-start;
-      padding: 246px 6vw 40px;
-      background-size: 100% 100%, 100% 100%, contain;
-      background-position: center, center, top center;
+      flex-direction:column;
+      align-items:stretch;
+      padding: 0;
+      overflow:visible;
     }
-    .hero-inner{ margin:0 auto; max-width:100%; align-items:center; text-align:center; }
+    .hero-video{ position:static; height:auto; display:block; }
+    .hero-overlay{ display:none; }
+    .hero-inner{ position:static; margin:0 auto; padding:28px 6vw 40px; max-width:100%; align-items:center; text-align:center; }
     .wordmark-img{ width:min(80vw, 440px); }
     .divider, .badges{ justify-content:center; }
     .badge.supply{ text-align:center; }
@@ -383,6 +392,8 @@
 </header>
 
 <section class="hero">
+  <video class="hero-video" id="heroVideo" src="navidia_web.mp4" autoplay muted playsinline preload="auto" aria-hidden="true"></video>
+  <div class="hero-overlay"></div>
   <div class="hero-inner">
     <img class="wordmark-img" src="navidia_wordmark.png" alt="Na'vidia">
     <p class="tagline">The <b>blue chip</b> memestock of Base.</p>
@@ -504,6 +515,38 @@
 </footer>
 
 <script>
+  // ---- Hero video: ping-pong playback (forward, then backward, then forward, forever) ----
+  // Browsers don't support native reverse playback, so on "ended" we manually
+  // walk currentTime backward via requestAnimationFrame, then hand off to a
+  // normal forward play() once we reach the start, and repeat.
+  (function(){
+    const heroVideo = document.getElementById("heroVideo");
+    if(!heroVideo) return;
+    let rafId = null;
+
+    function playBackward(){
+      heroVideo.pause();
+      let last = performance.now();
+      function step(now){
+        const dt = (now - last) / 1000;
+        last = now;
+        const t = heroVideo.currentTime - dt;
+        if (t <= 0.03) {
+          heroVideo.currentTime = 0;
+          rafId = null;
+          heroVideo.play().catch(() => {});
+          return;
+        }
+        heroVideo.currentTime = t;
+        rafId = requestAnimationFrame(step);
+      }
+      rafId = requestAnimationFrame(step);
+    }
+
+    heroVideo.addEventListener("ended", playBackward);
+    heroVideo.play().catch(() => {});
+  })();
+
   // ---- Config: replace CONTRACT_ADDRESS once the token is deployed/launched ----
   const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // TODO: set real $NAVIDIA contract address on Base
 
