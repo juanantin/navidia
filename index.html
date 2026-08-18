@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Cpath d='M18 46V18h6l16 20V18h6v28h-6L24 26v20z' fill='%234fa8ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #050a14;
@@ -27,7 +27,7 @@
   body{
     background: var(--bg);
     color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Sora', system-ui, sans-serif;
     min-height:100vh;
     overflow-x:hidden;
   }
@@ -161,8 +161,8 @@
     position:relative; z-index:2;
     margin-left:auto;
     max-width: 620px;
-    text-align:right;
-    display:flex; flex-direction:column; align-items:flex-end; gap:18px;
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:18px;
   }
   .wordmark-img{
     width: min(48vw, 600px);
@@ -195,7 +195,7 @@
   }
   .cta-line b{ color: var(--blue-bright); font-weight:800; }
 
-  .badges{ display:flex; gap:14px; margin-top:10px; flex-wrap:wrap; justify-content:flex-end; }
+  .badges{ display:flex; gap:14px; margin-top:10px; flex-wrap:wrap; justify-content:center; }
   .badge{
     display:flex; align-items:center; gap:10px;
     background: var(--panel);
@@ -335,9 +335,8 @@
     <div class="brand-name">Na<span class="apos">’</span>vidia</div>
   </div>
   <nav class="links">
-    <a class="nav-link" id="xLink" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer">
+    <a class="nav-link" id="xLink" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer" aria-label="X">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
-      <span class="label">X</span>
     </a>
     <a class="nav-link" id="chartLink" href="#" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg>
@@ -353,7 +352,7 @@
 
 <section class="hero">
   <div class="hero-inner">
-    <img class="wordmark-img" src="navidia_title.png" alt="Na'vidia">
+    <img class="wordmark-img" src="navidia_wordmark.png" alt="Na'vidia">
     <p class="tagline">The <b>blue chip</b> memestock of Base.</p>
 
     <div class="divider">
@@ -362,7 +361,7 @@
       <span class="line right"></span>
     </div>
 
-    <p class="cta-line">Buy <b>$NAVIDIA</b> and<br>get <b>$NVIDIA</b> stock rewards.</p>
+    <p class="cta-line">Buy <b>$NAVIDIA</b><br>get <b>$NVIDIA</b> stock rewards.</p>
 
     <div class="badges">
       <div class="badge">
