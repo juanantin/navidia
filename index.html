@@ -54,6 +54,47 @@
   }
   .starfield::after{ background-size: 900px 900px; background-position: 200px 300px; opacity:.35; }
 
+  /* ---------- Animations ---------- */
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes blinkDots{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
+  @keyframes pulseGlow{
+    0%,100%{ box-shadow: 0 0 40px rgba(79,168,255,0.45), inset 0 1px 0 rgba(255,255,255,0.3); }
+    50%{ box-shadow: 0 0 62px rgba(79,168,255,0.75), inset 0 1px 0 rgba(255,255,255,0.35); }
+  }
+
+  header{ animation: fadeIn .7s ease both; }
+  .wordmark-img{ animation: fadeUp .9s ease both .05s; }
+  .tagline{ animation: fadeUp .9s ease both .2s; }
+  .divider{ animation: fadeUp .9s ease both .32s; }
+  .cta-line{ animation: fadeUp .9s ease both .44s; }
+  .badges{ animation: fadeUp .9s ease both .56s; }
+
+  .reveal{ opacity:0; transform:translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .grid .card:nth-child(1){ transition-delay:.02s; }
+  .grid .card:nth-child(2){ transition-delay:.09s; }
+  .grid .card:nth-child(3){ transition-delay:.16s; }
+  .grid .card:nth-child(4){ transition-delay:.23s; }
+  .grid .card:nth-child(5){ transition-delay:.30s; }
+  .grid .card:nth-child(6){ transition-delay:.37s; }
+
+  .loading-value{
+    display:inline-block;
+    color: var(--muted);
+    letter-spacing:2px;
+    animation: blinkDots 1.3s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   /* ---------- Header ---------- */
   header{
     position:sticky; top:0; z-index:50;
@@ -104,23 +145,17 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
-    min-height: 62vh;
+    width:100%;
+    aspect-ratio: 1672 / 941;
     display:flex; align-items:center;
-    padding: 60px 6vw 70px;
-    background:
-      radial-gradient(ellipse 90% 60% at 75% 15%, rgba(70,130,220,0.22), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 15% 85%, rgba(30,120,140,0.18), transparent 60%),
-      linear-gradient(180deg, rgba(3,6,12,0.15) 0%, rgba(3,6,12,0.55) 70%, var(--bg) 100%),
-      url('navidia_web_bg.png') center 20% / cover no-repeat,
-      linear-gradient(160deg, #0a1730 0%, #050b18 55%, #030509 100%);
-  }
-  .hero-moon{
-    position:absolute; top:8%; right:8%; width:min(30vw,380px); height:min(30vw,380px);
-    border-radius:50%;
-    background: radial-gradient(circle at 35% 35%, #cfe6ff 0%, #8fc0f2 35%, #3f6fa8 65%, #17335c 100%);
-    box-shadow: 0 0 120px 40px rgba(120,180,255,0.25);
-    opacity:.85;
-    z-index:0;
+    padding: 40px 6vw;
+    background-image:
+      linear-gradient(180deg, transparent 68%, var(--bg) 100%),
+      linear-gradient(100deg, transparent 38%, rgba(3,7,15,0.4) 70%, rgba(3,7,15,0.6) 100%),
+      url('navidia_web_bg.png');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: center, center, center;
+    background-size: 100% 100%, 100% 100%, cover;
   }
   .hero-inner{
     position:relative; z-index:2;
@@ -129,19 +164,16 @@
     text-align:right;
     display:flex; flex-direction:column; align-items:flex-end; gap:18px;
   }
-  .wordmark{
-    font-family:'Cinzel', serif;
-    font-weight:600;
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height:1;
-    letter-spacing:.01em;
-    color:#eaf6ff;
-    text-shadow: 0 0 30px rgba(120,190,255,0.55), 0 0 70px rgba(80,150,255,0.35);
+  .wordmark-img{
+    width: min(48vw, 600px);
+    height:auto;
+    filter: drop-shadow(0 0 26px rgba(120,190,255,0.45)) drop-shadow(0 0 60px rgba(80,150,255,0.25));
   }
   .tagline{
     font-size: clamp(1rem, 1.6vw, 1.3rem);
     color: var(--text);
     font-weight:400;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.6);
   }
   .tagline b{ color: var(--blue-bright); font-weight:700; }
 
@@ -159,6 +191,7 @@
     font-size: clamp(1.1rem, 2vw, 1.5rem);
     line-height:1.5;
     font-weight:500;
+    text-shadow: 0 1px 14px rgba(0,0,0,0.65);
   }
   .cta-line b{ color: var(--blue-bright); font-weight:800; }
 
@@ -171,6 +204,7 @@
     border-radius:999px;
     font-size:.9rem;
     color: var(--text);
+    backdrop-filter: blur(4px);
   }
   .badge .icon-circle{
     width:22px; height:22px; border-radius:50%;
@@ -208,7 +242,7 @@
     padding:22px 24px 18px;
     display:flex; flex-direction:column; gap:14px;
     backdrop-filter: blur(6px);
-    transition: border-color .2s ease, transform .2s ease;
+    transition: border-color .2s ease, transform .2s ease, opacity .7s ease, transform .7s ease;
   }
   .card:hover{ border-color: var(--blue); transform: translateY(-2px); }
   .card-head{ display:flex; align-items:center; gap:12px; }
@@ -247,8 +281,9 @@
     box-shadow: 0 0 40px rgba(79,168,255,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
     transition: transform .15s ease, box-shadow .15s ease;
     white-space:nowrap;
+    animation: pulseGlow 2.6s ease-in-out infinite;
   }
-  .buy-btn:hover{ transform: translateY(-2px); box-shadow: 0 0 55px rgba(79,168,255,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .buy-btn:hover{ animation-play-state: paused; transform: translateY(-2px); box-shadow: 0 0 55px rgba(79,168,255,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
 
   footer{
     text-align:center;
@@ -262,10 +297,18 @@
     header{ padding:14px 18px; gap:10px; }
     nav.links{ gap:14px; }
     .nav-link span.label{ display:none; }
-    .hero{ padding: 110px 6vw 60px; justify-content:center; }
-    .hero-inner{ margin:0 auto; align-items:center; text-align:center; }
+    .hero{
+      aspect-ratio: unset;
+      align-items:flex-start;
+      padding: 246px 6vw 40px;
+      background-size: 100% 100%, 100% 100%, contain;
+      background-position: center, center, top center;
+    }
+    .hero-inner{ margin:0 auto; max-width:100%; align-items:center; text-align:center; }
+    .wordmark-img{ width:min(80vw, 440px); }
     .divider, .badges{ justify-content:center; }
     .badge.supply{ text-align:center; }
+    .tagline, .cta-line{ font-size:1rem; }
     .grid{ grid-template-columns: 1fr; }
     .cta-wrap{ flex-direction:column; }
     .cta-ornament{ display:none; }
@@ -309,9 +352,8 @@
 </header>
 
 <section class="hero">
-  <div class="hero-moon"></div>
   <div class="hero-inner">
-    <h1 class="wordmark">Na’vidia</h1>
+    <img class="wordmark-img" src="navidia_title.png" alt="Na'vidia">
     <p class="tagline">The <b>blue chip</b> memestock of Base.</p>
 
     <div class="divider">
@@ -336,7 +378,7 @@
 </section>
 
 <section class="dashboard-section" id="dashboard">
-  <div class="section-label">
+  <div class="section-label reveal">
     <span class="line"></span>
     <span>LIVE DASHBOARD</span>
     <span class="line"></span>
@@ -344,73 +386,73 @@
 
   <div class="grid">
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
         <span class="card-label">Total Fees Collected</span>
       </div>
-      <div class="card-value" id="feesValue">$1,247,893.42</div>
+      <div class="card-value loading-value" id="feesValue" data-value="$1,247,893.42">···</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,32 L15,30 L30,26 L45,28 L60,22 L75,24 L90,18 L105,20 L120,14 L135,16 L150,10 L165,12 L180,6 L200,8 L200,40 L0,40 Z"/>
         <path class="line" d="M0,32 L15,30 L30,26 L45,28 L60,22 L75,24 L90,18 L105,20 L120,14 L135,16 L150,10 L165,12 L180,6 L200,8"/>
       </svg>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg></span>
         <span class="card-label">Total $NVIDIA Distributed</span>
       </div>
-      <div class="card-value" id="nvidiaValue">12,543.78<span class="unit">$NVIDIA</span></div>
-      <div class="card-subvalue" id="nvidiaUsdValue">$1,823,456.21 <span class="unit">USD</span></div>
+      <div class="card-value"><span class="loading-value" id="nvidiaValue" data-value="12,543.78">···</span><span class="unit">$NVIDIA</span></div>
+      <div class="card-subvalue"><span class="loading-value" id="nvidiaUsdValue" data-value="$1,823,456.21">···</span> <span class="unit">USD</span></div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,34 L15,30 L30,31 L45,25 L60,27 L75,19 L90,22 L105,15 L120,17 L135,11 L150,13 L165,8 L180,9 L200,4 L200,40 L0,40 Z"/>
         <path class="line" d="M0,34 L15,30 L30,31 L45,25 L60,27 L75,19 L90,22 L105,15 L120,17 L135,11 L150,13 L165,8 L180,9 L200,4"/>
       </svg>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87"/><path d="M9 20H4v-2a4 4 0 0 1 3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M14.5 3.5a4 4 0 0 1 0 7.75"/></svg></span>
         <span class="card-label">Holders</span>
       </div>
-      <div class="card-value" id="holdersValue">8,924</div>
+      <div class="card-value loading-value" id="holdersValue" data-value="8,924">···</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9 L200,40 L0,40 Z"/>
         <path class="line" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9"/>
       </svg>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1 3 2.2c0 2.8-6 1.8-6 4.6 0 1.2 1.3 2.2 3 2.2s3-1.1 3-2.5"/></svg></span>
         <span class="card-label">Market Cap</span>
       </div>
-      <div class="card-value" id="mcapValue">$14,682,531.72</div>
+      <div class="card-value loading-value" id="mcapValue" data-value="$14,682,531.72">···</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,33 L15,28 L30,29 L45,24 L60,26 L75,20 L90,21 L105,16 L120,18 L135,12 L150,14 L165,9 L180,10 L200,5 L200,40 L0,40 Z"/>
         <path class="line" d="M0,33 L15,28 L30,29 L45,24 L60,26 L75,20 L90,21 L105,16 L120,18 L135,12 L150,14 L165,9 L180,10 L200,5"/>
       </svg>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7c3.5 4 7 8.1 7 12a7 7 0 0 1-14 0c0-3.9 3.5-8 7-12Z"/></svg></span>
         <span class="card-label">Liquidity</span>
       </div>
-      <div class="card-value" id="liquidityValue">$2,385,719.33</div>
+      <div class="card-value loading-value" id="liquidityValue" data-value="$2,385,719.33">···</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,31 L15,27 L30,28 L45,22 L60,24 L75,18 L90,20 L105,14 L120,16 L135,11 L150,13 L165,8 L180,9 L200,6 L200,40 L0,40 Z"/>
         <path class="line" d="M0,31 L15,27 L30,28 L45,22 L60,24 L75,18 L90,20 L105,14 L120,16 L135,11 L150,13 L165,8 L180,9 L200,6"/>
       </svg>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
       <div class="card-head">
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="17" y="3" width="4" height="17"/></svg></span>
         <span class="card-label">24H Volume</span>
       </div>
-      <div class="card-value" id="volumeValue">$3,187,654.98</div>
+      <div class="card-value loading-value" id="volumeValue" data-value="$3,187,654.98">···</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,29 L15,31 L30,25 L45,27 L60,20 L75,23 L90,16 L105,19 L120,12 L135,15 L150,9 L165,11 L180,5 L200,8 L200,40 L0,40 Z"/>
         <path class="line" d="M0,29 L15,31 L30,25 L45,27 L60,20 L75,23 L90,16 L105,19 L120,12 L135,15 L150,9 L165,11 L180,5 L200,8"/>
@@ -419,7 +461,7 @@
 
   </div>
 
-  <div class="cta-wrap">
+  <div class="cta-wrap reveal">
     <span class="cta-ornament"></span>
     <a class="buy-btn" id="buyLink" href="#" target="_blank" rel="noopener noreferrer">BUY $NAVIDIA</a>
     <span class="cta-ornament right"></span>
@@ -464,6 +506,29 @@
     caBtn.classList.add("copied");
     setTimeout(() => caBtn.classList.remove("copied"), 1600);
   });
+
+  // ---- Scroll-in reveal for dashboard elements ----
+  const revealEls = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach((el) => io.observe(el));
+
+  // ---- Live data wiring ----
+  // Call setLiveValue(id, text) once real on-chain/API data is available;
+  // it stops the "···" blink and swaps in the real value.
+  // e.g. setLiveValue('feesValue', '$1,247,893.42');
+  function setLiveValue(id, value){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove("loading-value");
+    el.textContent = value;
+  }
 </script>
 
 </body>
