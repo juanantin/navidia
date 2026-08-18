@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Na'vidia | $NAVIDIA — The Blue Chip Memestock of Base</title>
+<meta name="description" content="Na'vidia — the blue chip memestock of Base. Buy $NAVIDIA and get $NVIDIA stock rewards. 1,000,000,000 total supply.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Cpath d='M18 46V18h6l16 20V18h6v28h-6L24 26v20z' fill='%234fa8ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #050a14;
+    --bg-deep: #030509;
+    --panel: rgba(12, 24, 48, 0.55);
+    --panel-border: rgba(88, 160, 255, 0.25);
+    --blue: #4fa8ff;
+    --blue-bright: #8fd0ff;
+    --blue-deep: #1f5fb8;
+    --text: #eaf3ff;
+    --muted: #93a8c9;
+    --glow: 0 0 24px rgba(79, 168, 255, 0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+
+  .starfield{
+    position:fixed; inset:0; z-index:-2;
+    background: var(--bg-deep);
+  }
+  .starfield::before, .starfield::after{
+    content:""; position:absolute; inset:0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #bcd8ff 100%, transparent),
+      radial-gradient(1px 1px at 60% 70%, #bcd8ff 100%, transparent),
+      radial-gradient(1px 1px at 80% 20%, #bcd8ff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 40% 80%, #dbeaff 100%, transparent),
+      radial-gradient(1px 1px at 90% 60%, #bcd8ff 100%, transparent),
+      radial-gradient(1px 1px at 10% 90%, #bcd8ff 100%, transparent),
+      radial-gradient(1.5px 1.5px at 70% 40%, #dbeaff 100%, transparent),
+      radial-gradient(1px 1px at 30% 55%, #bcd8ff 100%, transparent);
+    background-size: 600px 600px;
+    opacity:.6;
+  }
+  .starfield::after{ background-size: 900px 900px; background-position: 200px 300px; opacity:.35; }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 32px;
+    background: linear-gradient(to bottom, rgba(3,6,12,0.85), rgba(3,6,12,0.4));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(88,160,255,0.12);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:34px; height:34px; border-radius:9px;
+    background: linear-gradient(135deg, #1c3f7a, #0a1628);
+    border:1px solid rgba(143,208,255,0.5);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: var(--glow);
+    font-family:'Cinzel', serif; font-weight:700; color: var(--blue-bright);
+  }
+  .brand-name{ font-size:1.25rem; font-weight:600; letter-spacing:.02em; }
+  .brand-name .apos{ color: var(--blue-bright); }
+
+  nav.links{ display:flex; align-items:center; gap:26px; }
+  .nav-link{
+    display:flex; align-items:center; gap:8px;
+    font-size:.92rem; font-weight:500; color: var(--text);
+    padding:8px 4px; border-bottom:1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  .nav-link:hover{ color: var(--blue-bright); border-color: var(--blue-deep); }
+  .nav-link svg{ width:16px; height:16px; opacity:.9; }
+
+  .ca-btn{
+    display:flex; align-items:center; gap:8px;
+    background: rgba(20, 40, 74, 0.6);
+    border:1px solid var(--panel-border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size:.85rem;
+    color: var(--muted);
+  }
+  .ca-btn:hover{ border-color: var(--blue); color: var(--text); }
+  .ca-btn svg{ width:15px; height:15px; }
+  .ca-btn .ca-copied{ color:#7CF29C; display:none; }
+  .ca-btn.copied .ca-label{ display:none; }
+  .ca-btn.copied .ca-copied{ display:inline; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height: 62vh;
+    display:flex; align-items:center;
+    padding: 60px 6vw 70px;
+    background:
+      radial-gradient(ellipse 90% 60% at 75% 15%, rgba(70,130,220,0.22), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 15% 85%, rgba(30,120,140,0.18), transparent 60%),
+      linear-gradient(180deg, rgba(3,6,12,0.15) 0%, rgba(3,6,12,0.55) 70%, var(--bg) 100%),
+      url('assets/hero-bg.jpg') center 20% / cover no-repeat,
+      linear-gradient(160deg, #0a1730 0%, #050b18 55%, #030509 100%);
+  }
+  .hero-moon{
+    position:absolute; top:8%; right:8%; width:min(30vw,380px); height:min(30vw,380px);
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #cfe6ff 0%, #8fc0f2 35%, #3f6fa8 65%, #17335c 100%);
+    box-shadow: 0 0 120px 40px rgba(120,180,255,0.25);
+    opacity:.85;
+    z-index:0;
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    margin-left:auto;
+    max-width: 620px;
+    text-align:right;
+    display:flex; flex-direction:column; align-items:flex-end; gap:18px;
+  }
+  .wordmark{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height:1;
+    letter-spacing:.01em;
+    color:#eaf6ff;
+    text-shadow: 0 0 30px rgba(120,190,255,0.55), 0 0 70px rgba(80,150,255,0.35);
+  }
+  .tagline{
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    color: var(--text);
+    font-weight:400;
+  }
+  .tagline b{ color: var(--blue-bright); font-weight:700; }
+
+  .divider{
+    display:flex; align-items:center; gap:14px;
+    width:100%; max-width:340px;
+    color: var(--blue);
+    margin: 4px 0;
+  }
+  .divider .line{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--blue-deep)); }
+  .divider .line.right{ background: linear-gradient(90deg, var(--blue-deep), transparent); }
+  .divider svg{ width:20px; height:20px; }
+
+  .cta-line{
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height:1.5;
+    font-weight:500;
+  }
+  .cta-line b{ color: var(--blue-bright); font-weight:800; }
+
+  .badges{ display:flex; gap:14px; margin-top:10px; flex-wrap:wrap; justify-content:flex-end; }
+  .badge{
+    display:flex; align-items:center; gap:10px;
+    background: var(--panel);
+    border:1px solid var(--panel-border);
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:.9rem;
+    color: var(--text);
+  }
+  .badge .icon-circle{
+    width:22px; height:22px; border-radius:50%;
+    background: var(--blue);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .badge .icon-circle svg{ width:12px; height:12px; fill:#04101f; }
+  .badge.supply{ text-align:left; line-height:1.2; }
+  .badge.supply span{ display:block; color: var(--muted); font-size:.78rem; }
+
+  /* ---------- Dashboard ---------- */
+  .dashboard-section{
+    position:relative; z-index:2;
+    padding: 10px 6vw 80px;
+    background: linear-gradient(180deg, var(--bg) 0%, #060c1a 100%);
+  }
+  .section-label{
+    display:flex; align-items:center; gap:18px;
+    justify-content:center;
+    max-width:960px; margin:0 auto 40px;
+    color: var(--blue-bright);
+    font-size:.8rem; letter-spacing:.35em; font-weight:600;
+  }
+  .section-label .line{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--blue-deep), transparent); }
+
+  .grid{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;
+  }
+  .card{
+    background: var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:16px;
+    padding:22px 24px 18px;
+    display:flex; flex-direction:column; gap:14px;
+    backdrop-filter: blur(6px);
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{ border-color: var(--blue); transform: translateY(-2px); }
+  .card-head{ display:flex; align-items:center; gap:12px; }
+  .card-icon{
+    width:38px; height:38px; border-radius:50%;
+    background: rgba(79,168,255,0.15);
+    border:1px solid rgba(79,168,255,0.4);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .card-icon svg{ width:18px; height:18px; stroke: var(--blue-bright); fill:none; }
+  .card-label{ font-size:.72rem; letter-spacing:.08em; color: var(--muted); font-weight:600; text-transform:uppercase; }
+  .card-value{ font-size:1.7rem; font-weight:700; color:#fff; }
+  .card-value .unit{ color: var(--blue-bright); font-size:1.1rem; font-weight:700; margin-left:4px; }
+  .card-subvalue{ font-size:.85rem; color: var(--muted); margin-top:-8px; }
+  .card-subvalue .unit{ color: var(--muted); font-weight:500; }
+  .sparkline{ width:100%; height:36px; }
+  .sparkline path.fill{ fill: url(#sparkGradient); stroke:none; }
+  .sparkline path.line{ fill:none; stroke: var(--blue-bright); stroke-width:1.6; }
+
+  /* ---------- CTA ---------- */
+  .cta-wrap{
+    display:flex; align-items:center; justify-content:center; gap:20px;
+    max-width:720px; margin:56px auto 0;
+  }
+  .cta-ornament{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--blue-deep)); position:relative; }
+  .cta-ornament.right{ background: linear-gradient(90deg, var(--blue-deep), transparent); }
+  .buy-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 18px 56px;
+    font-size:1.15rem; font-weight:800; letter-spacing:.04em;
+    color:#fff;
+    background: linear-gradient(180deg, #3f8ff0, #1f5fb8);
+    border:1px solid rgba(180,220,255,0.6);
+    border-radius:14px;
+    box-shadow: 0 0 40px rgba(79,168,255,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .buy-btn:hover{ transform: translateY(-2px); box-shadow: 0 0 55px rgba(79,168,255,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
+
+  footer{
+    text-align:center;
+    padding: 34px 20px 46px;
+    color: var(--muted);
+    font-size:.85rem;
+    background: #060c1a;
+  }
+
+  @media (max-width: 860px){
+    header{ padding:14px 18px; gap:10px; }
+    nav.links{ gap:14px; }
+    .nav-link span.label{ display:none; }
+    .hero{ padding: 110px 6vw 60px; justify-content:center; }
+    .hero-inner{ margin:0 auto; align-items:center; text-align:center; }
+    .divider, .badges{ justify-content:center; }
+    .badge.supply{ text-align:center; }
+    .grid{ grid-template-columns: 1fr; }
+    .cta-wrap{ flex-direction:column; }
+    .cta-ornament{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="starfield"></div>
+
+<!-- SVG defs (sparkline gradient) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4fa8ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#4fa8ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">N</div>
+    <div class="brand-name">Na<span class="apos">’</span>vidia</div>
+  </div>
+  <nav class="links">
+    <a class="nav-link" id="xLink" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
+      <span class="label">X</span>
+    </a>
+    <a class="nav-link" id="chartLink" href="#" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg>
+      <span class="label">Chart</span>
+    </a>
+    <button class="ca-btn" id="caBtn" title="Click to copy contract address">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+      <span class="ca-label" id="caText">CA: 0x0000…0000</span>
+      <span class="ca-copied">Copied!</span>
+    </button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-moon"></div>
+  <div class="hero-inner">
+    <h1 class="wordmark">Na’vidia</h1>
+    <p class="tagline">The <b>blue chip</b> memestock of Base.</p>
+
+    <div class="divider">
+      <span class="line"></span>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.5 3.6L12 11.6 5.5 7.9 12 4.3ZM5 9.7l6 3.3v6.7l-6-3.3V9.7Zm8 10v-6.7l6-3.3v6.7l-6 3.3Z"/></svg>
+      <span class="line right"></span>
+    </div>
+
+    <p class="cta-line">Buy <b>$NAVIDIA</b> and<br>get <b>$NVIDIA</b> stock rewards.</p>
+
+    <div class="badges">
+      <div class="badge">
+        <span class="icon-circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span>
+        Built on Base
+      </div>
+      <div class="badge supply">
+        <span>1,000,000,000</span>
+        Total Supply
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard-section" id="dashboard">
+  <div class="section-label">
+    <span class="line"></span>
+    <span>LIVE DASHBOARD</span>
+    <span class="line"></span>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+        <span class="card-label">Total Fees Collected</span>
+      </div>
+      <div class="card-value" id="feesValue">$1,247,893.42</div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,32 L15,30 L30,26 L45,28 L60,22 L75,24 L90,18 L105,20 L120,14 L135,16 L150,10 L165,12 L180,6 L200,8 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,32 L15,30 L30,26 L45,28 L60,22 L75,24 L90,18 L105,20 L120,14 L135,16 L150,10 L165,12 L180,6 L200,8"/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg></span>
+        <span class="card-label">Total $NVIDIA Distributed</span>
+      </div>
+      <div class="card-value" id="nvidiaValue">12,543.78<span class="unit">$NVIDIA</span></div>
+      <div class="card-subvalue" id="nvidiaUsdValue">$1,823,456.21 <span class="unit">USD</span></div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,34 L15,30 L30,31 L45,25 L60,27 L75,19 L90,22 L105,15 L120,17 L135,11 L150,13 L165,8 L180,9 L200,4 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,34 L15,30 L30,31 L45,25 L60,27 L75,19 L90,22 L105,15 L120,17 L135,11 L150,13 L165,8 L180,9 L200,4"/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87"/><path d="M9 20H4v-2a4 4 0 0 1 3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M14.5 3.5a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="card-label">Holders</span>
+      </div>
+      <div class="card-value" id="holdersValue">8,924</div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9"/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1 3 2.2c0 2.8-6 1.8-6 4.6 0 1.2 1.3 2.2 3 2.2s3-1.1 3-2.5"/></svg></span>
+        <span class="card-label">Market Cap</span>
+      </div>
+      <div class="card-value" id="mcapValue">$14,682,531.72</div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,33 L15,28 L30,29 L45,24 L60,26 L75,20 L90,21 L105,16 L120,18 L135,12 L150,14 L165,9 L180,10 L200,5 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,33 L15,28 L30,29 L45,24 L60,26 L75,20 L90,21 L105,16 L120,18 L135,12 L150,14 L165,9 L180,10 L200,5"/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7c3.5 4 7 8.1 7 12a7 7 0 0 1-14 0c0-3.9 3.5-8 7-12Z"/></svg></span>
+        <span class="card-label">Liquidity</span>
+      </div>
+      <div class="card-value" id="liquidityValue">$2,385,719.33</div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,31 L15,27 L30,28 L45,22 L60,24 L75,18 L90,20 L105,14 L120,16 L135,11 L150,13 L165,8 L180,9 L200,6 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,31 L15,27 L30,28 L45,22 L60,24 L75,18 L90,20 L105,14 L120,16 L135,11 L150,13 L165,8 L180,9 L200,6"/>
+      </svg>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="8"/><rect x="10" y="7" width="4" height="13"/><rect x="17" y="3" width="4" height="17"/></svg></span>
+        <span class="card-label">24H Volume</span>
+      </div>
+      <div class="card-value" id="volumeValue">$3,187,654.98</div>
+      <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="fill" d="M0,29 L15,31 L30,25 L45,27 L60,20 L75,23 L90,16 L105,19 L120,12 L135,15 L150,9 L165,11 L180,5 L200,8 L200,40 L0,40 Z"/>
+        <path class="line" d="M0,29 L15,31 L30,25 L45,27 L60,20 L75,23 L90,16 L105,19 L120,12 L135,15 L150,9 L165,11 L180,5 L200,8"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="cta-wrap">
+    <span class="cta-ornament"></span>
+    <a class="buy-btn" id="buyLink" href="#" target="_blank" rel="noopener noreferrer">BUY $NAVIDIA</a>
+    <span class="cta-ornament right"></span>
+  </div>
+</section>
+
+<footer>
+  Na’vidia is not affiliated with NVIDIA Corporation.
+</footer>
+
+<script>
+  // ---- Config: replace CONTRACT_ADDRESS once the token is deployed/launched ----
+  const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // TODO: set real $NAVIDIA contract address on Base
+
+  function truncateAddress(addr){
+    if(!addr || addr.length < 12) return addr;
+    return addr.slice(0,6) + "…" + addr.slice(-4);
+  }
+
+  const caText = document.getElementById("caText");
+  const caBtn = document.getElementById("caBtn");
+  const chartLink = document.getElementById("chartLink");
+  const buyLink = document.getElementById("buyLink");
+
+  caText.textContent = "CA: " + truncateAddress(CONTRACT_ADDRESS);
+  chartLink.href = "https://dexscreener.com/base/" + CONTRACT_ADDRESS;
+  buyLink.href = "https://app.uniswap.org/swap?outputCurrency=" + CONTRACT_ADDRESS + "&chain=base";
+
+  caBtn.addEventListener("click", async () => {
+    try{
+      await navigator.clipboard.writeText(CONTRACT_ADDRESS);
+    }catch(e){
+      const ta = document.createElement("textarea");
+      ta.value = CONTRACT_ADDRESS;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    caBtn.classList.add("copied");
+    setTimeout(() => caBtn.classList.remove("copied"), 1600);
+  });
+</script>
+
+</body>
+</html>
