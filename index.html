@@ -129,14 +129,16 @@
 
   .ca-btn{
     display:flex; align-items:center; gap:8px;
-    background: rgba(20, 40, 74, 0.6);
-    border:1px solid var(--panel-border);
+    background: linear-gradient(160deg, rgba(24,42,74,0.7), rgba(10,18,36,0.6));
+    border:1px solid rgba(255,255,255,0.1);
     border-radius: 999px;
-    padding: 7px 14px;
+    padding: 8px 16px;
     font-size:.85rem;
     color: var(--muted);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    transition: border-color .15s ease, color .15s ease, box-shadow .15s ease;
   }
-  .ca-btn:hover{ border-color: var(--blue); color: var(--text); }
+  .ca-btn:hover{ border-color: var(--blue); color: var(--text); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 16px rgba(79,168,255,0.25); }
   .ca-btn svg{ width:15px; height:15px; }
   .ca-btn .ca-copied{ color:#7CF29C; display:none; }
   .ca-btn.copied .ca-label{ display:none; }
@@ -198,23 +200,24 @@
   .badges{ display:flex; gap:14px; margin-top:10px; flex-wrap:wrap; justify-content:center; }
   .badge{
     display:flex; align-items:center; gap:10px;
-    background: var(--panel);
-    border:1px solid var(--panel-border);
-    padding:10px 18px;
+    background: linear-gradient(160deg, rgba(24,42,74,0.65), rgba(10,18,36,0.55));
+    border:1px solid rgba(255,255,255,0.1);
+    padding:10px 20px;
     border-radius:999px;
     font-size:.9rem;
+    font-weight:500;
     color: var(--text);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .badge .icon-circle{
-    width:22px; height:22px; border-radius:50%;
-    background: var(--blue);
-    display:flex; align-items:center; justify-content:center;
+    width:20px; height:20px; border-radius:50%;
+    background: #0052FF;
+    box-shadow: 0 0 10px rgba(0,82,255,0.7), inset 0 1px 1px rgba(255,255,255,0.35);
     flex-shrink:0;
   }
-  .badge .icon-circle svg{ width:12px; height:12px; fill:#04101f; }
   .badge.supply{ text-align:left; line-height:1.2; }
-  .badge.supply span{ display:block; color: var(--muted); font-size:.78rem; }
+  .badge.supply span{ display:block; color: var(--muted); font-size:.78rem; font-weight:400; }
 
   /* ---------- Dashboard ---------- */
   .dashboard-section{
@@ -222,6 +225,7 @@
     padding: 10px 6vw 80px;
     background: linear-gradient(180deg, var(--bg) 0%, #060c1a 100%);
   }
+  @keyframes livePulse{ 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(.7); } }
   .section-label{
     display:flex; align-items:center; gap:18px;
     justify-content:center;
@@ -230,38 +234,56 @@
     font-size:.8rem; letter-spacing:.35em; font-weight:600;
   }
   .section-label .line{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--blue-deep), transparent); }
+  .live-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,0.9);
+    animation: livePulse 1.8s ease-in-out infinite;
+  }
 
   .grid{
     max-width:1080px; margin:0 auto;
-    display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:22px;
   }
   .card{
-    background: var(--panel);
-    border:1px solid var(--panel-border);
-    border-radius:16px;
-    padding:22px 24px 18px;
+    position:relative;
+    overflow:hidden;
+    background: linear-gradient(165deg, rgba(26,44,78,0.6), rgba(8,15,30,0.6));
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:24px 26px 20px;
     display:flex; flex-direction:column; gap:14px;
-    backdrop-filter: blur(6px);
-    transition: border-color .2s ease, transform .2s ease, opacity .7s ease, transform .7s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease, opacity .7s ease;
   }
-  .card:hover{ border-color: var(--blue); transform: translateY(-2px); }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+    opacity:.6;
+  }
+  .card:hover{
+    border-color: rgba(143,208,255,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.45), 0 0 32px rgba(79,168,255,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
   .card-head{ display:flex; align-items:center; gap:12px; }
   .card-icon{
-    width:38px; height:38px; border-radius:50%;
-    background: rgba(79,168,255,0.15);
-    border:1px solid rgba(79,168,255,0.4);
+    width:40px; height:40px; border-radius:12px;
+    background: linear-gradient(155deg, rgba(79,168,255,0.28), rgba(79,168,255,0.06));
+    border:1px solid rgba(143,208,255,0.35);
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
   }
-  .card-icon svg{ width:18px; height:18px; stroke: var(--blue-bright); fill:none; }
+  .card-icon svg{ width:18px; height:18px; stroke: var(--blue-bright); fill:none; filter: drop-shadow(0 0 4px rgba(143,208,255,0.5)); }
   .card-label{ font-size:.72rem; letter-spacing:.08em; color: var(--muted); font-weight:600; text-transform:uppercase; }
-  .card-value{ font-size:1.7rem; font-weight:700; color:#fff; }
+  .card-value{ font-size:1.75rem; font-weight:800; color:#fff; letter-spacing:-0.01em; font-variant-numeric: tabular-nums; }
   .card-value .unit{ color: var(--blue-bright); font-size:1.1rem; font-weight:700; margin-left:4px; }
-  .card-subvalue{ font-size:.85rem; color: var(--muted); margin-top:-8px; }
+  .card-subvalue{ font-size:.85rem; color: var(--muted); margin-top:-8px; font-variant-numeric: tabular-nums; }
   .card-subvalue .unit{ color: var(--muted); font-weight:500; }
-  .sparkline{ width:100%; height:36px; }
+  .sparkline{ width:100%; height:36px; filter: drop-shadow(0 0 5px rgba(143,208,255,0.45)); }
   .sparkline path.fill{ fill: url(#sparkGradient); stroke:none; }
-  .sparkline path.line{ fill:none; stroke: var(--blue-bright); stroke-width:1.6; }
+  .sparkline path.line{ fill:none; stroke: var(--blue-bright); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 
   /* ---------- CTA ---------- */
   .cta-wrap{
@@ -270,20 +292,30 @@
   }
   .cta-ornament{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--blue-deep)); position:relative; }
   .cta-ornament.right{ background: linear-gradient(90deg, var(--blue-deep), transparent); }
+  @keyframes shine{ 0%{ transform:translateX(-120%) skewX(-20deg); } 100%{ transform:translateX(220%) skewX(-20deg); } }
   .buy-btn{
+    position:relative;
+    overflow:hidden;
     display:inline-flex; align-items:center; justify-content:center;
-    padding: 18px 56px;
+    padding: 19px 58px;
     font-size:1.15rem; font-weight:800; letter-spacing:.04em;
     color:#fff;
-    background: linear-gradient(180deg, #3f8ff0, #1f5fb8);
-    border:1px solid rgba(180,220,255,0.6);
+    background: linear-gradient(180deg, #58a2ff 0%, #3f8ff0 45%, #1a54ad 100%);
+    border:1px solid rgba(200,228,255,0.7);
     border-radius:14px;
-    box-shadow: 0 0 40px rgba(79,168,255,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 0 40px rgba(79,168,255,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
     transition: transform .15s ease, box-shadow .15s ease;
     white-space:nowrap;
     animation: pulseGlow 2.6s ease-in-out infinite;
   }
+  .buy-btn::after{
+    content:""; position:absolute; top:0; bottom:0; left:0; width:35%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+    animation: shine 3.2s ease-in-out infinite;
+    animation-delay:1s;
+  }
   .buy-btn:hover{ animation-play-state: paused; transform: translateY(-2px); box-shadow: 0 0 55px rgba(79,168,255,0.65), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .buy-btn:hover::after{ animation-play-state: paused; }
 
   footer{
     text-align:center;
@@ -365,7 +397,7 @@
 
     <div class="badges">
       <div class="badge">
-        <span class="icon-circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span>
+        <span class="icon-circle" aria-hidden="true"></span>
         Built on Base
       </div>
       <div class="badge supply">
@@ -379,7 +411,7 @@
 <section class="dashboard-section" id="dashboard">
   <div class="section-label reveal">
     <span class="line"></span>
-    <span>LIVE DASHBOARD</span>
+    <span style="display:inline-flex; align-items:center; gap:9px;"><span class="live-dot"></span>LIVE DASHBOARD</span>
     <span class="line"></span>
   </div>
 
