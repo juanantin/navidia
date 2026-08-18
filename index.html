@@ -219,9 +219,8 @@
   }
   .badge .icon-circle{
     width:20px; height:20px; border-radius:50%;
-    background: #0052FF;
-    box-shadow: 0 0 10px rgba(0,82,255,0.7), inset 0 1px 1px rgba(255,255,255,0.35);
     flex-shrink:0;
+    filter: drop-shadow(0 0 6px rgba(0,82,255,0.65));
   }
   .badge.supply{ text-align:left; line-height:1.2; }
   .badge.supply span{ display:block; color: var(--muted); font-size:.78rem; font-weight:400; }
@@ -379,9 +378,8 @@
     <a class="nav-link" id="xLink" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer" aria-label="X">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
     </a>
-    <a class="nav-link" id="chartLink" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="nav-link" id="chartLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chart">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg>
-      <span class="label">Chart</span>
     </a>
     <button class="ca-btn" id="caBtn" title="Click to copy contract address">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
@@ -411,7 +409,7 @@
 
     <div class="badges">
       <div class="badge">
-        <span class="icon-circle" aria-hidden="true"></span>
+        <img class="icon-circle" src="base_logo.png" alt="" aria-hidden="true">
         Built on Base
       </div>
       <div class="badge supply">
