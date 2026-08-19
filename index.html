@@ -251,12 +251,19 @@
     transform:translateX(-50%);
     display:flex; flex-direction:column; align-items:center; gap:10px;
     opacity:0;
+    transition: opacity .35s ease;
   }
+  /* !important needed: the fadeIn entrance animation's fill-mode:both keeps
+     asserting opacity:1 after it finishes, which otherwise beats a plain
+     inline/class opacity override. */
+  .scroll-cue.scroll-cue-hidden{ opacity:0 !important; pointer-events:none; }
+  @keyframes gentleBlink{ 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
   .scroll-cue-label{
     font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
     color: var(--blue-bright);
     text-shadow: 0 1px 10px rgba(0,0,0,0.7);
     white-space:nowrap;
+    animation: gentleBlink 2.6s ease-in-out infinite 1.3s;
   }
   .scroll-cue-icon{
     display:flex; align-items:center; justify-content:center;
@@ -658,6 +665,16 @@
     caBtn.classList.add("copied");
     setTimeout(() => caBtn.classList.remove("copied"), 1600);
   });
+
+  // ---- Hide the scroll-down cue as soon as the user actually scrolls ----
+  (function(){
+    const cue = document.querySelector(".scroll-cue");
+    if(!cue) return;
+    function updateCue(){
+      cue.classList.toggle("scroll-cue-hidden", window.scrollY > 30);
+    }
+    window.addEventListener("scroll", updateCue, { passive: true });
+  })();
 
   // ---- Scroll-in reveal for dashboard elements ----
   const revealEls = document.querySelectorAll(".reveal");
