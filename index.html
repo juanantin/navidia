@@ -158,10 +158,7 @@
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:cover;
-    opacity:0;
-    transition: opacity .2s linear;
   }
-  .hero-video.active{ opacity:1; }
   .hero-overlay{
     position:absolute; inset:0; z-index:1;
     background-image:
@@ -451,8 +448,7 @@
 
 <section class="hero">
   <div class="hero-video-wrap" aria-hidden="true">
-    <video class="hero-video" id="heroVideoFwd" src="navidia_web.mp4" muted playsinline preload="auto"></video>
-    <video class="hero-video" id="heroVideoRev" src="navidia_web_reverse.mp4" muted playsinline preload="auto"></video>
+    <video class="hero-video" src="navidia_web_pingpong.mp4" autoplay muted loop playsinline preload="auto"></video>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-inner">
@@ -598,47 +594,6 @@
 </footer>
 
 <script>
-  // ---- Hero video: ping-pong playback (forward, then backward, then forward, forever) ----
-  // Browsers have no native reverse playback, and faking it by scrubbing
-  // currentTime on one compressed video stalls (each seek has to decode
-  // from the nearest keyframe, so rapid seeks queue up and the frame
-  // freezes). Instead, swap between two real files — the original and a
-  // pre-rendered reverse of it — so both directions are normal forward
-  // decode. Their loop point lines up exactly since one is just the
-  // other's frames in reverse order.
-  //
-  // The swap itself used to seek the incoming video to currentTime=0 right
-  // at the visible moment of the swap — that seek isn't instant (it has to
-  // decode from the keyframe), so it showed up as an intermittent jump.
-  // Instead, each video is reset to 0 right after it's hidden (in the
-  // background, while the other one plays), so by the time it's needed
-  // again it's already sitting at frame 0 with nothing left to seek. The
-  // crossfade also waits for an actual "playing" frame before swapping
-  // opacity, so there's no flash of a stale/blank frame either.
-  (function(){
-    const fwd = document.getElementById("heroVideoFwd");
-    const rev = document.getElementById("heroVideoRev");
-    if(!fwd || !rev) return;
-
-    function crossTo(showEl, hideEl){
-      function onPlaying(){
-        showEl.classList.add("active");
-        hideEl.classList.remove("active");
-        hideEl.pause();
-        hideEl.currentTime = 0;
-        showEl.removeEventListener("playing", onPlaying);
-      }
-      showEl.addEventListener("playing", onPlaying);
-      showEl.play().catch(() => {});
-    }
-
-    fwd.addEventListener("ended", () => crossTo(rev, fwd));
-    rev.addEventListener("ended", () => crossTo(fwd, rev));
-
-    fwd.classList.add("active");
-    fwd.play().catch(() => {});
-  })();
-
   // ---- Config: replace CONTRACT_ADDRESS once the token is deployed/launched ----
   const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // TODO: set real $NAVIDIA contract address on Base
 
