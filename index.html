@@ -233,6 +233,7 @@
   }
   .badge.supply{ text-align:left; line-height:1.2; }
   .badge.supply span{ display:block; color: var(--muted); font-size:.78rem; font-weight:400; }
+  .hero-links{ display:none; }
 
   .scroll-cue{
     position:absolute; z-index:5;
@@ -387,7 +388,8 @@
   @media (max-width: 860px){
     header{ display:none; }
     .hero{
-      height:70vh;
+      height:auto;
+      min-height:64vh;
       align-items:flex-end;
       padding: 28px 7vw 100px;
     }
@@ -398,7 +400,20 @@
     .badge.supply{ text-align:center; }
     .tagline{ font-size:1rem; }
     .cta-line{ font-size:1.15rem; }
-    .grid{ grid-template-columns: 1fr; }
+    .hero-links{
+      display:flex; align-items:center; justify-content:center;
+      gap:12px; margin-top:16px;
+    }
+    .grid{ grid-template-columns: repeat(2, 1fr); gap:12px; }
+    .card{ padding:16px 14px 14px; gap:10px; border-radius:14px; }
+    .card-head{ gap:8px; }
+    .card-icon{ width:32px; height:32px; border-radius:10px; }
+    .card-icon svg{ width:15px; height:15px; }
+    .card-label{ font-size:.62rem; letter-spacing:.04em; }
+    .card-value{ font-size:1.2rem; }
+    .card-value .unit{ font-size:.8rem; }
+    .card-subvalue{ font-size:.68rem; margin-top:-4px; }
+    .sparkline{ height:26px; }
     .cta-wrap{ flex-direction:column; }
     .cta-ornament{ display:none; }
   }
@@ -419,16 +434,16 @@
 </svg>
 
 <header>
-  <button class="ca-btn" id="caBtn" title="Click to copy contract address">
+  <button class="ca-btn" title="Click to copy contract address">
     <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
-    <span class="ca-label" id="caText">CA: 0x0000…0000</span>
+    <span class="ca-label">CA: 0x0000…0000</span>
     <span class="ca-copied">Copied!</span>
   </button>
   <nav class="links">
     <a class="nav-link" id="xLink" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer" aria-label="X">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
     </a>
-    <a class="nav-link" id="chartLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chart">
+    <a class="nav-link chart-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chart">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg>
     </a>
   </nav>
@@ -455,6 +470,20 @@
         <span>1,000,000,000</span>
         Total Supply
       </div>
+    </div>
+
+    <div class="hero-links">
+      <button class="ca-btn" title="Click to copy contract address">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+        <span class="ca-label">CA: 0x0000…0000</span>
+        <span class="ca-copied">Copied!</span>
+      </button>
+      <a class="nav-link" href="https://x.com/BlueChip_nvidia" target="_blank" rel="noopener noreferrer" aria-label="X">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
+      </a>
+      <a class="nav-link chart-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chart">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 3v6h-6"/></svg>
+      </a>
     </div>
   </div>
 
@@ -618,30 +647,34 @@
     return addr.slice(0,6) + "…" + addr.slice(-4);
   }
 
-  const caText = document.getElementById("caText");
-  const caBtn = document.getElementById("caBtn");
-  const chartLink = document.getElementById("chartLink");
   const buyLink = document.getElementById("buyLink");
 
-  caText.textContent = "CA: " + truncateAddress(CONTRACT_ADDRESS);
-  chartLink.href = "https://dexscreener.com/base/" + CONTRACT_ADDRESS;
+  // Both the desktop header and the mobile hero row have their own copies
+  // of the CA button and chart link, so these wire up every instance
+  // found on the page rather than assuming just one.
+  document.querySelectorAll(".chart-link").forEach((el) => {
+    el.href = "https://dexscreener.com/base/" + CONTRACT_ADDRESS;
+  });
   buyLink.href = "https://app.uniswap.org/swap?outputCurrency=" + CONTRACT_ADDRESS + "&chain=base";
 
-  caBtn.addEventListener("click", async () => {
-    try{
-      await navigator.clipboard.writeText(CONTRACT_ADDRESS);
-    }catch(e){
-      const ta = document.createElement("textarea");
-      ta.value = CONTRACT_ADDRESS;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-    }
-    caBtn.classList.add("copied");
-    setTimeout(() => caBtn.classList.remove("copied"), 1600);
+  document.querySelectorAll(".ca-btn").forEach((caBtn) => {
+    caBtn.querySelector(".ca-label").textContent = "CA: " + truncateAddress(CONTRACT_ADDRESS);
+    caBtn.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(CONTRACT_ADDRESS);
+      }catch(e){
+        const ta = document.createElement("textarea");
+        ta.value = CONTRACT_ADDRESS;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      caBtn.classList.add("copied");
+      setTimeout(() => caBtn.classList.remove("copied"), 1600);
+    });
   });
 
   // ---- Hide the scroll-down cue as soon as the user actually scrolls ----
