@@ -366,6 +366,7 @@
     display:flex; flex-direction:column; align-items:center; gap:12px;
     margin: 72px auto 0;
   }
+  .launched-on + .launched-on{ margin-top: 30px; }
   .launched-on-label{
     font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
     color: var(--muted); font-weight:600;
@@ -585,6 +586,13 @@
     <span class="launched-on-label">Launched on</span>
     <a href="https://www.thestonks.exchange/" target="_blank" rel="noopener noreferrer" class="launched-on-link">
       <img src="stonks_exchange.png" alt="Stonks.Exchange" class="launched-on-logo" onerror="this.closest('.launched-on').style.display='none'">
+    </a>
+  </div>
+
+  <div class="launched-on reveal">
+    <span class="launched-on-label">Holder rewards powered by</span>
+    <a href="https://www.stockify.finance/" target="_blank" rel="noopener noreferrer" class="launched-on-link">
+      <img src="stockyfi_logo copy.png" alt="Stockify" class="launched-on-logo" onerror="this.closest('.launched-on').style.display='none'">
     </a>
   </div>
 </section>
