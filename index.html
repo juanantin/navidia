@@ -606,7 +606,8 @@
   const CONTRACT_ADDRESS = "0x653C739De450bc4A77c3b138331bdce2e0dAC236";
   // Dexscreener uses the liquidity pair address, not the token contract
   // address, so this is set separately rather than derived from CONTRACT_ADDRESS.
-  const CHART_URL = "https://dexscreener.com/base/0x79e2e3d4934a32fae6bbc4f82cfa5136f7e9ca75";
+  const PAIR_ADDRESS = "0x79e2e3d4934a32fae6bbc4f82cfa5136f7e9ca75";
+  const CHART_URL = "https://dexscreener.com/base/" + PAIR_ADDRESS;
 
   function truncateAddress(addr){
     if(!addr || addr.length < 12) return addr;
@@ -675,6 +676,41 @@
     el.classList.remove("loading-value");
     el.textContent = value;
   }
+
+  // ---- Market Cap / Liquidity / 24H Volume, live from Dexscreener ----
+  // Runs in each visitor's own browser, so it's unaffected by any egress
+  // restrictions on the machine this was built on. Refreshes periodically
+  // so the numbers stay current without a page reload.
+  const DEXSCREENER_API = "https://api.dexscreener.com/latest/dex/pairs/base/" + PAIR_ADDRESS;
+
+  function formatUsd(n){
+    const num = Number(n);
+    if(!isFinite(num)) return null;
+    return "$" + num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  async function refreshMarketStats(){
+    try{
+      const res = await fetch(DEXSCREENER_API);
+      if(!res.ok) throw new Error("Dexscreener request failed: " + res.status);
+      const data = await res.json();
+      const pair = data.pair || (Array.isArray(data.pairs) ? data.pairs[0] : null);
+      if(!pair) throw new Error("No pair data in Dexscreener response");
+
+      const marketCap = pair.marketCap ?? pair.fdv;
+      const liquidity = pair.liquidity && pair.liquidity.usd;
+      const volume24h = pair.volume && pair.volume.h24;
+
+      if(marketCap != null) setLiveValue("mcapValue", formatUsd(marketCap));
+      if(liquidity != null) setLiveValue("liquidityValue", formatUsd(liquidity));
+      if(volume24h != null) setLiveValue("volumeValue", formatUsd(volume24h));
+    }catch(e){
+      console.warn("Dexscreener stats refresh failed:", e);
+    }
+  }
+
+  refreshMarketStats();
+  setInterval(refreshMarketStats, 30000);
 </script>
 
 </body>
