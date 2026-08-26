@@ -531,7 +531,7 @@
         <span class="card-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87"/><path d="M9 20H4v-2a4 4 0 0 1 3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M14.5 3.5a4 4 0 0 1 0 7.75"/></svg></span>
         <span class="card-label">Holders</span>
       </div>
-      <div class="card-value loading-value" id="holdersValue" data-value="8,924">···</div>
+      <div class="card-value" id="holdersValue" data-value="201">201</div>
       <svg class="sparkline" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path class="fill" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9 L200,40 L0,40 Z"/>
         <path class="line" d="M0,30 L15,29 L30,25 L45,27 L60,21 L75,23 L90,17 L105,19 L120,13 L135,15 L150,10 L165,12 L180,7 L200,9"/>
@@ -711,25 +711,6 @@
 
   refreshMarketStats();
   setInterval(refreshMarketStats, 30000);
-
-  // ---- Holders count, live from Blockscout (Base) ----
-  const BLOCKSCOUT_TOKEN_API = "https://base.blockscout.com/api/v2/tokens/" + CONTRACT_ADDRESS;
-
-  async function refreshHolders(){
-    try{
-      const res = await fetch(BLOCKSCOUT_TOKEN_API);
-      if(!res.ok) throw new Error("Blockscout request failed: " + res.status);
-      const data = await res.json();
-      const count = data.holders_count ?? data.holders ?? data.holder_count;
-      if(count == null) throw new Error("No holders count in Blockscout response");
-      setLiveValue("holdersValue", Number(count).toLocaleString("en-US"));
-    }catch(e){
-      console.warn("Holders count refresh failed:", e);
-    }
-  }
-
-  refreshHolders();
-  setInterval(refreshHolders, 30000);
 </script>
 
 </body>
