@@ -602,8 +602,11 @@
 </footer>
 
 <script>
-  // ---- Config: replace CONTRACT_ADDRESS once the token is deployed/launched ----
-  const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000"; // TODO: set real $NAVIDIA contract address on Base
+  // ---- Config ----
+  const CONTRACT_ADDRESS = "0x653C739De450bc4A77c3b138331bdce2e0dAC236";
+  // Dexscreener uses the liquidity pair address, not the token contract
+  // address, so this is set separately rather than derived from CONTRACT_ADDRESS.
+  const CHART_URL = "https://dexscreener.com/base/0x79e2e3d4934a32fae6bbc4f82cfa5136f7e9ca75";
 
   function truncateAddress(addr){
     if(!addr || addr.length < 12) return addr;
@@ -616,7 +619,7 @@
   // of the CA button and chart link, so these wire up every instance
   // found on the page rather than assuming just one.
   document.querySelectorAll(".chart-link").forEach((el) => {
-    el.href = "https://dexscreener.com/base/" + CONTRACT_ADDRESS;
+    el.href = CHART_URL;
   });
   buyLink.href = "https://app.uniswap.org/swap?outputCurrency=" + CONTRACT_ADDRESS + "&chain=base";
 
